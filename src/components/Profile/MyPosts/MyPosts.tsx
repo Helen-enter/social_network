@@ -1,6 +1,7 @@
 import React from "react";
 import classes from './MyPosts.module.css'
 import Post from "./Posts/Post";
+import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/state";
 
 type postsDataType = {
     id: number
@@ -8,25 +9,39 @@ type postsDataType = {
     likesCount: number
 }
 
-type MyPostsPropsType = {
-    posts: Array<postsDataType>
-    addPost: () => void
-    newPostText: string
-    updateNewPostText: (newText: string) => void
+type AddPostActionType = {
+    type: 'ADD-POST'
 }
 
+type UpdateNewPostTextType = {
+    type: 'UPDATE-NEW-POST-TEXT'
+    newText: string
+}
+
+type ActionsType = AddPostActionType | UpdateNewPostTextType
+
+type MyPostsPropsType = {
+    posts: Array<postsDataType>
+    //addPost: () => void
+    newPostText: string
+    //updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionsType) => void
+}
 
 const MyPosts = (props: MyPostsPropsType) => {
     let postsElements = props.posts.map((el) => <Post message={el.message} likesCount={el.likesCount} id={el.id}/>)
     let newPostElement = React.createRef<HTMLTextAreaElement>();
     let addPost = () => {
-        props.addPost();
+        //props.addPost();
+        props.dispatch(addPostActionCreator())
     }
 
     const onPostChange = () => {
         if(newPostElement.current?.value) {
         let text = newPostElement.current.value;
-        props.updateNewPostText(text);
+        //props.updateNewPostText(text);
+           // let action = ({type: 'UPDATE-NEW-POST-TEXT', newText: text})
+            props.dispatch(updateNewPostTextActionCreator(text));
         }
     }
 

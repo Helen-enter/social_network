@@ -13,10 +13,21 @@ type profilePageType = {
     newPostText: string
 }
 
+type AddPostActionType = {
+    type: 'ADD-POST'
+}
+
+type UpdateNewPostTextType = {
+    type: 'UPDATE-NEW-POST-TEXT'
+    newText: string
+}
+type ActionsType = AddPostActionType | UpdateNewPostTextType
+
 type ProfilePropsType = {
     profilePage: profilePageType
-    addPostCallback: () => void
-    updateNewPostText: (newText: string) => void
+    //addPostCallback: () => void
+   // updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionsType) => void
 }
 
 const Profile = (props: ProfilePropsType) => {
@@ -24,9 +35,8 @@ const Profile = (props: ProfilePropsType) => {
         <div>
             <ProfileInfo/>
             <MyPosts posts={props.profilePage.postsData}
-                     addPost={props.addPostCallback}
-                     newPostText={props.profilePage.newPostText}
-                     updateNewPostText={props.updateNewPostText}/>
+                     dispatch={props.dispatch}
+                     newPostText={props.profilePage.newPostText}/>
         </div>
     )
 }

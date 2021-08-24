@@ -2,34 +2,30 @@ import React from "react";
 import classes from './Dialogs.module.css'
 import DialogItem from "./DialogsItem/DialogItem";
 import Message from "./Message/Message";
-
-type dialogsDataType = {
-    id: number
-    name: string
-}
-
-type messagesDataType = {
-    id: number
-    message: string
-}
-
-
-type messagesPageType = {
-    messagesData: Array<messagesDataType>
-    dialogsData: Array<dialogsDataType>
-}
+import {sendMessage, StoreType, updateNewMessageBodyCreator} from "../../redux/state";
 
 type DialogsType = {
-    state: messagesPageType
+    store: StoreType
 }
 
 const Dialogs = (props: DialogsType) => {
 
-    let dialogsEl = props.state.dialogsData
-    let messagesEl = props.state.messagesData
+    let state = props.store.getState().messagesPage
+
+    let dialogsEl = state.dialogsData
+    let messagesEl = state.messagesData
+    let newMessageBody = state.newMessageBody
 
     let dialogsElements = dialogsEl.map((d: { name: string; id: number; }) => <DialogItem name={d.name} id={d.id}/>);
-    let messagesElements = messagesEl.map((m: { message: string; id: number; }) => <Message message={m.message} id = {m.id} />);
+    let messagesElements = messagesEl.map((m: { message: string; id: number; }) => <Message message={m.message} id = {m.id} />)
+
+    let onSendMessageClick = () => {
+        props.store.dispatch(sendMessage())
+    }
+    let onNewMessageChange = (e: any) => {
+        let body = e.target.value
+        props.store.dispatch(updateNewMessageBodyCreator(body))
+    }
 
     return (
         <div className={classes.dialogs}>
@@ -37,7 +33,13 @@ const Dialogs = (props: DialogsType) => {
                 {dialogsElements}
             </div>
             <div className={classes.messages}>
-                {messagesElements}
+                <div>{messagesElements}</div>
+                <div>
+                    <div><textarea value={newMessageBody}
+                                   onChange={onNewMessageChange}
+                                   placeholder='enter your message'></textarea></div>
+                    <div><button onClick={onSendMessageClick}>Send</button></div>
+                </div>
             </div>
         </div>
     )

@@ -4,13 +4,22 @@ import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
-import {BrowserRouter, Route} from 'react-router-dom';
-import {stateType} from "./redux/state";
+import {Route} from 'react-router-dom';
+import {
+    AddPostActionType,
+    SendMessageType,
+    stateType,
+    StoreType,
+    UpdateNewMessageBodyType,
+    UpdateNewPostTextType
+} from "./redux/state";
+
+type ActionsType = AddPostActionType | UpdateNewPostTextType | UpdateNewMessageBodyType | SendMessageType
 
 type AppPropsType = {
     state: stateType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionsType) => void
+    store: StoreType
 }
 
 function App(props: AppPropsType) {
@@ -19,10 +28,9 @@ function App(props: AppPropsType) {
                 <Header/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs' render={() => <Dialogs state={props.state.messagesPage}/>}/>
+                    <Route path='/dialogs' render={() => <Dialogs store={props.store}/>}/>
                     <Route path='/profile' render={() => <Profile profilePage={props.state.profilePage}
-                                                                  addPostCallback={props.addPost}
-                                                                  updateNewPostText={props.updateNewPostText}/>}/>
+                                                                  dispatch={props.dispatch}/>}/>
                 </div>
             </div>
     )
