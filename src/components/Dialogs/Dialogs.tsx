@@ -2,14 +2,15 @@ import React from "react";
 import classes from './Dialogs.module.css'
 import DialogItem from "./DialogsItem/DialogItem";
 import Message from "./Message/Message";
-import {sendMessage, StoreType, updateNewMessageBodyCreator} from "../../redux/state";
+import {sendMessage, updateNewMessageBodyCreator} from "../../redux/dialogs-reducer";
+import {StoreType} from "../../redux/store";
 
 type DialogsType = {
     store: StoreType
 }
 
 const Dialogs = (props: DialogsType) => {
-
+debugger;
     let state = props.store.getState().messagesPage
 
     let dialogsEl = state.dialogsData

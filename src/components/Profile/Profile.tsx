@@ -31,6 +31,7 @@ type ProfilePropsType = {
 }
 
 const Profile = (props: ProfilePropsType) => {
+    debugger;
     return (
         <div>
             <ProfileInfo/>

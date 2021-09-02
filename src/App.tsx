@@ -12,7 +12,9 @@ import {
     StoreType,
     UpdateNewMessageBodyType,
     UpdateNewPostTextType
-} from "./redux/state";
+} from "./redux/store";
+
+//43
 
 type ActionsType = AddPostActionType | UpdateNewPostTextType | UpdateNewMessageBodyType | SendMessageType
 
@@ -23,6 +25,7 @@ type AppPropsType = {
 }
 
 function App(props: AppPropsType) {
+    debugger;
     return (
             <div className='app-wrapper'>
                 <Header/>
