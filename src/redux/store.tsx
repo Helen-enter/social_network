@@ -45,7 +45,7 @@ let store: StoreType = {
                 {id: 2, message: 'It\'s my first post', likesCount: 23},
                 {id: 3, message: 'Hey', likesCount: 4}
             ],
-            newPostText: 'Yo, it-kamasutra',
+            newPostText: 'Yo!',
         },
         messagesPage: {
             messagesData: [
