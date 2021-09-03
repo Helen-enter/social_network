@@ -8,23 +8,11 @@ type postsDataType = {
     likesCount: number
 }
 
-type AddPostActionType = {
-    type: 'ADD-POST'
-}
-
-type UpdateNewPostTextType = {
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
-}
-
-type ActionsType = AddPostActionType | UpdateNewPostTextType
-
 type MyPostsPropsType = {
     posts: Array<postsDataType>
     addPost: () => void
     newPostText: string
     updateNewPostText: (newText: string) => void
-    dispatch: (action: ActionsType) => void
 }
 
 const MyPosts = (props: MyPostsPropsType) => {

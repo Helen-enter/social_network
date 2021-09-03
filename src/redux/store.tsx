@@ -120,4 +120,4 @@ export type stateType = {
 
 export default store;
 
-// window.store = store
+//window.store = store

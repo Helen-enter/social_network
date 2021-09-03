@@ -6,27 +6,25 @@ import App from "./App";
 import {stateType} from './redux/store'
 import React from "react";
 import store from "./redux/redux-store";
+import {Provider} from "./StoreContext";
 
 
 export let rerenderEntireTree = (state: stateType) => {
 
     ReactDOM.render(
         <BrowserRouter>
-            <App
-                state = {store.getState()}
-                dispatch = {store.dispatch.bind(store)}
-                store = {store}
-            />
-                </BrowserRouter>,
-    document.getElementById('root')
-)
+            <Provider store={store}>
+                <App
+                />
+            </Provider>
+        </BrowserRouter>,
+        document.getElementById('root')
+    )
     ;
 }
 
-//addPost('hey')
 rerenderEntireTree(store.getState());
-store.subscribe( () => {
-    //let state = store.getState()
+store.subscribe(() => {
     rerenderEntireTree(/*state*/store.getState())
 })
 // API
