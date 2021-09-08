@@ -24,18 +24,49 @@ export type UpdateNewMessageBodyType = {
     body: string
 }
 
+export type FollowUserType = {
+    type: 'FOLLOW'
+    userID: number
+}
+
+export type UnFollowUserType = {
+    type: 'UNFOLLOW'
+    userID: number
+}
+
+type LocationType = {
+    country: string
+    city: string
+}
+
+type UsersType = {
+    id: number
+    fullName: string
+    status: string
+    photoUrl: string
+    followed: boolean
+    location: LocationType
+}
+
+export type SetUsersType = {
+    type: 'SET-USERS'
+    users: Array<UsersType>
+}
+
 //export type UpdateNewMessageBodyType = ReturnType<typeof updateNewMessageBodyCreator>
 
 export type SendMessageType = {
     type: 'SEND-MESSAGE'
 }
 
-export type ActionsType = AddPostActionType | UpdateNewPostTextType | UpdateNewMessageBodyType | SendMessageType
-
-// const ADD_POST = 'ADD-POST'
-// const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
-// const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
-// const SEND_MESSAGE = 'SEND-MESSAGE'
+export type ActionsType =
+    AddPostActionType |
+    UpdateNewPostTextType |
+    UpdateNewMessageBodyType |
+    SendMessageType |
+    FollowUserType |
+    UnFollowUserType |
+    SetUsersType
 
 let store: StoreType = {
     _state: {
