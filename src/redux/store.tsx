@@ -1,6 +1,17 @@
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
+import { SetCurrentPageType } from "./users-reducer";
+
+export type ActionsType =
+    AddPostActionType |
+    UpdateNewPostTextType |
+    UpdateNewMessageBodyType |
+    SendMessageType |
+    FollowUserType |
+    UnFollowUserType |
+    SetUsersType |
+    SetCurrentPageType
 
 export type StoreType = {
     _state: stateType
@@ -59,14 +70,7 @@ export type SendMessageType = {
     type: 'SEND-MESSAGE'
 }
 
-export type ActionsType =
-    AddPostActionType |
-    UpdateNewPostTextType |
-    UpdateNewMessageBodyType |
-    SendMessageType |
-    FollowUserType |
-    UnFollowUserType |
-    SetUsersType
+
 
 let store: StoreType = {
     _state: {
