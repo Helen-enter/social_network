@@ -6,13 +6,14 @@ import {Dispatch} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 
 let mapStateToProps = (state: AppStateType) => {
-    return{
-        messagesPage: state.messagesPage
+    return {
+        messagesPage: state.messagesPage,
+        isAuth: state.auth.isAuth
     }
 }
 
 let mapDispatchToProps = (dispatch: Dispatch) => {
-    return{
+    return {
         updateNewMessageBody: (body: any) => {
             dispatch(updateNewMessageBodyCreator(body))
         },

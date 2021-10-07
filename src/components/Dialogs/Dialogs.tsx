@@ -3,11 +3,13 @@ import classes from './Dialogs.module.css'
 import DialogItem from "./DialogsItem/DialogItem";
 import Message from "./Message/Message";
 import {messagesPageType} from "../../redux/store";
+import { Redirect } from "react-router-dom";
 
 type DialogsType = {
     updateNewMessageBody: (body: any) => void
     sendMessage: () => void
     messagesPage: messagesPageType
+    isAuth : any
 }
 
 const Dialogs = (props: DialogsType) => {
@@ -17,8 +19,11 @@ const Dialogs = (props: DialogsType) => {
     let messagesEl = state.messagesData
     let newMessageBody = state.newMessageBody
 
-    let dialogsElements = dialogsEl.map((d: { name: string; id: number; }) => <DialogItem key={d.id} name={d.name} id={d.id}/>);
-    let messagesElements = messagesEl.map((m: { message: string; id: number; }) => <Message key={m.id} message={m.message} id = {m.id} />)
+    let dialogsElements = dialogsEl.map((d: { name: string; id: number; }) => <DialogItem key={d.id} name={d.name}
+                                                                                          id={d.id}/>);
+    let messagesElements = messagesEl.map((m: { message: string; id: number; }) => <Message key={m.id}
+                                                                                            message={m.message}
+                                                                                            id={m.id}/>)
 
     let onSendMessageClick = () => {
         props.sendMessage()
@@ -27,6 +32,8 @@ const Dialogs = (props: DialogsType) => {
         let body = e.target.value
         props.updateNewMessageBody(body)
     }
+
+    if (!props.isAuth) return <Redirect to={'/Login'}/>
 
     return (
         <div className={classes.dialogs}>
@@ -38,8 +45,11 @@ const Dialogs = (props: DialogsType) => {
                 <div>
                     <div><textarea value={newMessageBody}
                                    onChange={onNewMessageChange}
-                                   placeholder='enter your message'></textarea></div>
-                    <div><button onClick={onSendMessageClick}>Send</button></div>
+                                   placeholder='enter your message'/>
+                    </div>
+                    <div>
+                        <button onClick={onSendMessageClick}>Send</button>
+                    </div>
                 </div>
             </div>
         </div>

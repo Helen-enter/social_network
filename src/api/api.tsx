@@ -15,12 +15,20 @@ export const usersAPI = {
             .then(response => {
                 return response.data
             })
+    },
+    follow(userId: number) {
+        return instance.post(`/follow/${userId}`)
+    },
+    unfollow(userId: number) {
+        return instance.delete(`/follow/${userId}`)
+    },
+    getProfile(userId: number) {
+        return instance.get(`/profile/2` + userId);
     }
 }
 
-export const getUsers2 = (currentPage: number = 1, pageSize: number = 10) => {
-    return instance.get(`/follow?page=${currentPage}&count=${pageSize}`)
-        .then(response => {
-            return response.data
-        })
+export const authAPI = {
+    me() {
+        return instance.get(`/auth/me`);
+    }
 }
