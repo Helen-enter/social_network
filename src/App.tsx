@@ -10,13 +10,15 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 
 function App() {
-    debugger;
+
     return (
         <div className='app-wrapper'>
             <HeaderContainer/>
             <Navbar/>
             <div className='app-wrapper-content'>
+                // @ts-ignore
                 <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                //@ts-ignore
                 <Route path='/profile/:user.Id?' render={() => <ProfileContainer/>}/>
                 <Route path='/users' render={() => <UsersContainer />}/>
                 <Route path='/login' render={() => <Login />}/>
