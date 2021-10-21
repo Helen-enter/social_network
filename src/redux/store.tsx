@@ -11,7 +11,13 @@ export type ActionsType =
     FollowUserType |
     UnFollowUserType |
     SetUsersType |
-    SetCurrentPageType
+    SetCurrentPageType |
+    SetStatusType
+
+export type SetStatusType = {
+    type: 'SET-STATUS'
+    status: string
+}
 
 export type StoreType = {
     _state: stateType
@@ -81,6 +87,8 @@ let store: StoreType = {
                 {id: 3, message: 'Hey', likesCount: 4}
             ],
             newPostText: 'Yo!',
+            status: '',
+            profile: ''
         },
         messagesPage: {
             messagesData: [
@@ -138,6 +146,8 @@ export type messagesDataType = {
 export type profilePageType = {
     postsData: Array<postsDataType>
     newPostText: string
+    status: string
+    profile: any
 }
 
 export type messagesPageType = {

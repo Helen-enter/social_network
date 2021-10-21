@@ -6,13 +6,15 @@ import sidebarReducer from "./sidebar-reducer";
 import usersReducer from "./users-reducer";
 import AuthReducer from "./auth-reducer";
 import thunkMiddleWare from "redux-thunk"
+import {reducer as formReducer} from "redux-form";
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
     messagesPage: dialogsReducer,
     sidebar: sidebarReducer,
     usersPage: usersReducer,
-    auth: AuthReducer
+    auth: AuthReducer,
+    form: formReducer
 });
 
 export type AppStateType = ReturnType<typeof rootReducer>
