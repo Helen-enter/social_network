@@ -2,12 +2,9 @@ import React from "react";
 import {
     ActionsType,
     dialogsDataType,
-    messagesDataType,
-    SendMessageType,
-    UpdateNewMessageBodyType
+    messagesDataType
 } from "./store";
 
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
 type InitialStateType = {
@@ -35,16 +32,10 @@ let initialState: InitialStateType = {
 
 const dialogsReducer = (state= initialState, action: ActionsType) => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-            return {
-                ...state,
-                newMessageBody: action.body
-            };
         case SEND_MESSAGE:
-            let body = state.newMessageBody
+            let body = action.newMessageBody
             return  {
                 ...state,
-                newMessageBody: '',
                 messagesData: [...state.messagesData, {id: 6, message: body}]
             };
         default:
@@ -52,10 +43,7 @@ const dialogsReducer = (state= initialState, action: ActionsType) => {
     }
 }
 
-export const sendMessage = (): SendMessageType => ({type: SEND_MESSAGE})
-export const updateNewMessageBodyCreator = (body: string): UpdateNewMessageBodyType => ({
-    type: UPDATE_NEW_MESSAGE_BODY,
-    body: body
-})
+export const sendMessage = (newMessageBody: string): { newMessageBody: string; type: string } => ({type: SEND_MESSAGE, newMessageBody})
+
 
 export default dialogsReducer;

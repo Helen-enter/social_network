@@ -156,7 +156,7 @@ export const toggleIsFollowingProgress = (isFetching: boolean, userId: number): 
     isFetching,
     userId
 })
-export const setUserProfile = (profile: any): any => ({type: SET_USER_PROFILE, profile})
+//export const setUserProfile = (profile: any): any => ({type: SET_USER_PROFILE, profile})
 
 export const getUsers = (currentPage: number, pageSize: number) => {
     return (dispatch: any) => {

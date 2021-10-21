@@ -12,7 +12,13 @@ export type ActionsType =
     UnFollowUserType |
     SetUsersType |
     SetCurrentPageType |
-    SetStatusType
+    SetStatusType |
+    SetUserProfileType
+
+export type SetUserProfileType = {
+    type: 'SET_USER_PROFILE',
+    profile: string
+}
 
 export type SetStatusType = {
     type: 'SET-STATUS'
@@ -29,6 +35,7 @@ export type StoreType = {
 
 export type AddPostActionType = {
     type: 'ADD-POST'
+    newPostText: string
 }
 
 export type UpdateNewPostTextType = {
@@ -73,6 +80,7 @@ export type SetUsersType = {
 //export type UpdateNewMessageBodyType = ReturnType<typeof updateNewMessageBodyCreator>
 
 export type SendMessageType = {
+    newMessageBody: string;
     type: 'SEND-MESSAGE'
 }
 
@@ -147,7 +155,7 @@ export type profilePageType = {
     postsData: Array<postsDataType>
     newPostText: string
     status: string
-    profile: any
+    profile: string
 }
 
 export type messagesPageType = {

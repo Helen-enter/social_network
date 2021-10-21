@@ -1,17 +1,17 @@
 import React from "react";
-import {ActionsType, AddPostActionType, postsDataType, UpdateNewPostTextType} from "./store";
+import {ActionsType, postsDataType} from "./store";
 import {profileAPI, usersAPI} from "../api/api";
-import {setUserProfile} from "./users-reducer";
+//import {setUserProfile} from "./users-reducer";
 
 const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET-STATUS'
 
 type InitialStateType = {
     postsData: Array<postsDataType>
     newPostText: string
-    profile: null
     status: string
+    profile: string
 }
 
 let initialState: InitialStateType = {
@@ -21,7 +21,7 @@ let initialState: InitialStateType = {
         {id: 3, message: 'Hey', likesCount: 4}
     ],
     newPostText: 'Yo!',
-    profile: null,
+    profile: '',
     status: ''
 }
 
@@ -30,7 +30,7 @@ const profileReducer = (state = initialState, action: ActionsType) => {
         case ADD_POST : {
             let newPost: postsDataType = {
                 id: 10,
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             }
             return {
@@ -39,33 +39,28 @@ const profileReducer = (state = initialState, action: ActionsType) => {
                 newPostText: ''
             };
         }
-        case UPDATE_NEW_POST_TEXT : {
-            return {
-                ...state,
-                newPostText: action.newText
-            }
-        }
-            ;
         case SET_STATUS : {
             return {
                 ...state,
                 status: action.status
             }
         }
+        case SET_USER_PROFILE: {
+            return {...state, profile: action.profile}
+        };
         default:
             return state;
     }
 }
 
-export const addPostActionCreator = (): AddPostActionType => ({type: ADD_POST})
+export const addPostActionCreator = (newPostText: string): { newPostText: string; type: string } => ({type: ADD_POST, newPostText})
+export const setUserProfile = (profile: string) => ({type: SET_USER_PROFILE, profile})
 export const getUserProfile = (userId: number) => (dispatch: any) => {
     usersAPI.getProfile(userId).then(response => {
         // @ts-ignore
         dispatch(setUserProfile(response.data.items));
     })
 }
-export const updateNewPostTextActionCreator = (text: string): UpdateNewPostTextType =>
-    ({type: UPDATE_NEW_POST_TEXT, newText: text})
 export const getStatus = (userId: number) => (dispatch: any) => {
     profileAPI.getStatus(userId)
         .then(response => {
