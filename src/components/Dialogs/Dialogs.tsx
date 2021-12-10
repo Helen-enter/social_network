@@ -1,65 +1,50 @@
 import React from "react";
-import classes from './Dialogs.module.css'
-import DialogItem from "./DialogsItem/DialogItem";
-import Message from "./Message/Message";
-import {messagesPageType} from "../../redux/store";
-import {Redirect} from "react-router-dom";
-import {Field} from "redux-form";
-import {reduxForm} from "redux-form";
+import s from './Dialogs.module.css'
+import {DialogItem} from "./DialogItem/DialogItem";
+import {Message} from "./Message/Message";
+import {StoreType} from "../../redux/store";
+import { sendMessageAC, updateNewMessageBodyAC } from "../../redux/dialogs-reducer";
 
-type DialogsType = {
-    updateNewMessageBody: (body: any) => void
-    sendMessage: (newMessageBody: string) => void
-    messagesPage: messagesPageType
-    isAuth: any
-    newMessageBody: string
+export type DialogsType = {
+    store: StoreType
 }
 
-const Dialogs = (props: DialogsType) => {
-    let state = props.messagesPage
-    //let newMessageBody = state.newMessageBody
+export const Dialogs = (props: DialogsType) => {
 
-    let dialogsEl = state.dialogsData
-    let messagesEl = state.messagesData
+    let state = props.store.getState()
 
-    let dialogsElements = dialogsEl.map((d: { name: string; id: number; }) => <DialogItem key={d.id} name={d.name}
-                                                                                          id={d.id}/>);
-    let messagesElements = messagesEl.map((m: { message: string; id: number; }) => <Message key={m.id}
-                                                                                            message={m.message}
-                                                                                            id={m.id}/>)
-    let addNewMessage = (values: any) => {
-        props.sendMessage(values.newMessageBody)
+    let dialogsElements = state.messagesPage.dialogsData.map(d => <DialogItem id={d.id} name={d.name}/>)
+    let messagesElements = state.messagesPage.messagesData.map((m) => <Message id={m.id} message={m.message}/>)
+    let newMessagesBody = state.messagesPage.newMessageBody
+
+    let onSendMessageClick = () => {
+        props.store.dispatch(sendMessageAC())
     }
 
-    if (!props.isAuth) return <Redirect to={'/Login'}/>
+    let onNewMessageChange = (e: React.ChangeEvent<any>) => {
+        let body = e.target.value
+        props.store.dispatch(updateNewMessageBodyAC(body))
+    }
 
     return (
-        <div className={classes.dialogs}>
-            <div className={classes.dialogsItems}>
+        <div className={s.dialogs}>
+            <div className={s.dialogsItem}>
                 {dialogsElements}
             </div>
-            <div className={classes.messages}>
+            <div className={s.messages}>
                 <div>{messagesElements}</div>
+                <div>
+                    <div><textarea placeholder={'enter your message'}
+                                   value={newMessagesBody}
+                                   onChange={onNewMessageChange}>
+
+                    </textarea>
+                    </div>
+                    <div>
+                        <button onClick={onSendMessageClick}>send</button>
+                    </div>
+                </div>
             </div>
-            <AddMessageFormRedux onSubmit={addNewMessage}/>
         </div>
     )
 }
-
-const AddMessageForm = (props: any) => {
-
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field component='textarea' name='newMessageBody' placeholder='enter your message'/>
-            </div>
-            <div>
-                <button>Send</button>
-            </div>
-        </form>
-    )
-}
-
-const AddMessageFormRedux = reduxForm({form: 'dialogAddMessageForm'})(AddMessageForm)
-
-export default Dialogs;

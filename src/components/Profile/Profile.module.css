@@ -1,1 +1,11 @@
+.content {
+    grid-area: c;
+ //background-color: #9c779c;
+    color: #686868;
+    font-weight: bold;
+}
 
+.mainContent {
+    width: 1000px;
+    height: 550px;
+}

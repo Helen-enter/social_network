@@ -1,0 +1,9 @@
+.photo {
+    width: 180px;
+    height: 116px;
+    background-size: contain;
+}
+
+.postBlock {
+    padding: 20px;
+}

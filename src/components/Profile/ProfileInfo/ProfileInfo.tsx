@@ -1,23 +1,17 @@
 import React from "react";
-import classes from "./ProfileInfo.module.css"
-import Preloader from "../../common/Preloader/Preloader";
-import ProfileStatus from "./ProfileStatus";
+import s from "../Profile.module.css";
+import image from "../../../assets/tmb.jpg";
 
-const ProfileInfo = (props: any) => {
-
-    if(!props.profile) {
-        return <Preloader />
-    }
-debugger;
+export const ProfileInfo = () => {
+    const divContent = {
+        backgroundImage: `url(${image})`,
+    };
     return (
-        <div>
-            {/*<img src='https://images.wallpaperscraft.ru/image/tekstura_fon_tekst_simvoly_50473_1920x1080.jpg'/>*/}
-            <div className={classes.descriptionBlock}>
-                <img src={props.profile.photos.large}/>
-                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+        <div className={s.content}>
+            <div className={s.mainContent} style={divContent}>
+                Main content
             </div>
+            <div>ava + description</div>
         </div>
     )
 }
-
-export default ProfileInfo;

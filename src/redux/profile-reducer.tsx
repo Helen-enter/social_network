@@ -1,80 +1,47 @@
 import React from "react";
-import {ActionsType, postsDataType} from "./store";
-import {profileAPI, usersAPI} from "../api/api";
-//import {setUserProfile} from "./users-reducer";
+import {StateType} from "./store";
+import {sendMessageACType, updateNewMessageBodyACType} from "./dialogs-reducer";
 
 const ADD_POST = 'ADD-POST'
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_STATUS = 'SET-STATUS'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 
-type InitialStateType = {
-    postsData: Array<postsDataType>
-    newPostText: string
-    status: string
-    profile: string
+export type addPostACType = ReturnType<typeof addPostAC>
+export type updateNewPostTextACType = ReturnType<typeof updateNewPostTextAC>
+
+export type ActionsType = addPostACType | updateNewPostTextACType | updateNewMessageBodyACType | sendMessageACType
+
+export const addPostAC = () => {
+    return {
+        type: ADD_POST
+    } as const
+}
+export const updateNewPostTextAC = (text: string) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        newText: text
+    } as const
 }
 
-let initialState: InitialStateType = {
-    postsData: [
-        {id: 1, message: 'Hi, how are you?', likesCount: 12},
-        {id: 2, message: 'It\'s my first post', likesCount: 23},
-        {id: 3, message: 'Hey', likesCount: 4}
+let InitialState = {
+    postData: [
+        {id: 1, message: 'I like ice cream!', likesCount: 3},
+        {id: 1, message: 'Hello world!', likesCount: 5},
+        {id: 1, message: 'juice and cake', likesCount: 10},
     ],
-    newPostText: 'Yo!',
-    profile: '',
-    status: ''
+    newPostText: 'this is new social network'
 }
 
-const profileReducer = (state = initialState, action: ActionsType) => {
+export const profileReducer = (state= InitialState, action: ActionsType) => {
     switch (action.type) {
-        case ADD_POST : {
-            let newPost: postsDataType = {
-                id: 10,
-                message: action.newPostText,
-                likesCount: 0
-            }
-            return {
-                ...state,
-                postsData: [...state.postsData, newPost],
-                newPostText: ''
-            };
-        }
-        case SET_STATUS : {
-            return {
-                ...state,
-                status: action.status
-            }
-        }
-        case SET_USER_PROFILE: {
-            return {...state, profile: action.profile}
-        };
+        case "ADD-POST":
+            let newPost = {id: 5, message: state.newPostText, likesCount: 0}
+            state.postData.push(newPost)
+            state.newPostText = ''
+            return state
+        case "UPDATE-NEW-POST-TEXT":
+            state.newPostText = action.newText
+            return state
         default:
             return state;
     }
 }
-
-export const addPostActionCreator = (newPostText: string): { newPostText: string; type: string } => ({type: ADD_POST, newPostText})
-export const setUserProfile = (profile: string) => ({type: SET_USER_PROFILE, profile})
-export const getUserProfile = (userId: number) => (dispatch: any) => {
-    usersAPI.getProfile(userId).then(response => {
-        // @ts-ignore
-        dispatch(setUserProfile(response.data.items));
-    })
-}
-export const getStatus = (userId: number) => (dispatch: any) => {
-    profileAPI.getStatus(userId)
-        .then(response => {
-            dispatch(setStatus(response.data))
-        })
-}
-export const updateStatus = (status: string) => (dispatch: any) => {
-    profileAPI.updateStatus(status)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setStatus(status))
-            }
-        })
-}
-export const setStatus = (status: string) => ({type: SET_STATUS, status})
-
-export default profileReducer;

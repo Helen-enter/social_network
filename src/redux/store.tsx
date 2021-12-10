@@ -1,147 +1,68 @@
-import profileReducer from "./profile-reducer";
-import dialogsReducer from "./dialogs-reducer";
-import sidebarReducer from "./sidebar-reducer";
-import { SetCurrentPageType } from "./users-reducer";
+import React from "react";
+import {addPostACType, profileReducer, updateNewPostTextACType} from "./profile-reducer";
+import {dialogsReducer, sendMessageACType, updateNewMessageBodyACType} from "./dialogs-reducer";
 
-export type ActionsType =
-    AddPostActionType |
-    UpdateNewPostTextType |
-    UpdateNewMessageBodyType |
-    SendMessageType |
-    FollowUserType |
-    UnFollowUserType |
-    SetUsersType |
-    SetCurrentPageType |
-    SetStatusType |
-    SetUserProfileType
-
-export type SetUserProfileType = {
-    type: 'SET_USER_PROFILE',
-    profile: string
-}
-
-export type SetStatusType = {
-    type: 'SET-STATUS'
-    status: string
-}
-
-export type StoreType = {
-    _state: stateType
-    getState: () => stateType
-    _callBackSubscriber: () => void
-    subscribe: (observer: any) => void
-    dispatch: (action: ActionsType) => void
-}
-
-export type AddPostActionType = {
-    type: 'ADD-POST'
-    newPostText: string
-}
-
-export type UpdateNewPostTextType = {
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
-}
-
-export type UpdateNewMessageBodyType = {
-    type: 'UPDATE-NEW-MESSAGE-BODY'
-    body: string
-}
-
-export type FollowUserType = {
-    type: 'FOLLOW'
-    userID: number
-}
-
-export type UnFollowUserType = {
-    type: 'UNFOLLOW'
-    userID: number
-}
-
-type LocationType = {
-    country: string
-    city: string
-}
-
-type UsersType = {
-    id: number
-    fullName: string
-    status: string
-    photoUrl: string
-    followed: boolean
-    location: LocationType
-}
-
-export type SetUsersType = {
-    type: 'SET-USERS'
-    users: Array<UsersType>
-}
-
-//export type UpdateNewMessageBodyType = ReturnType<typeof updateNewMessageBodyCreator>
-
-export type SendMessageType = {
-    newMessageBody: string;
-    type: 'SEND-MESSAGE'
-}
-
-
-
-let store: StoreType = {
+export let store: StoreType = {
     _state: {
         profilePage: {
-            postsData: [
-                {id: 1, message: 'Hi, how are you?', likesCount: 12},
-                {id: 2, message: 'It\'s my first post', likesCount: 23},
-                {id: 3, message: 'Hey', likesCount: 4}
+            postData: [
+                {id: 1, message: 'I like ice cream!', likesCount: 3},
+                {id: 1, message: 'Hello world!', likesCount: 5},
+                {id: 1, message: 'juice and cake', likesCount: 10},
             ],
-            newPostText: 'Yo!',
-            status: '',
-            profile: ''
+            newPostText: 'this is new social network'
         },
         messagesPage: {
-            messagesData: [
-                {id: 1, message: 'Hi'},
-                {id: 2, message: 'Hello'},
-                {id: 3, message: 'Yo'}
-            ],
             dialogsData: [
-                {id: 1, name: 'Dimych'},
-                {id: 2, name: 'Andrey'},
-                {id: 3, name: 'Sveta'},
-                {id: 4, name: 'Sasha'},
-                {id: 5, name: 'Viktor'},
-                {id: 6, name: 'Valera'}
+                {id: 1, name: 'Petr'},
+                {id: 2, name: 'Dmitriy'},
+                {id: 3, name: 'Andrey'},
+                {id: 4, name: 'Svetlana'},
+                {id: 5, name: 'Elena'},
+            ],
+            messagesData: [
+                {id: 1, message: 'Hi!'},
+                {id: 2, message: 'Hello)))'},
+                {id: 3, message: 'How are you?'},
             ],
             newMessageBody: ''
-        },
-        sidebar: {}
-    },
-    _callBackSubscriber() {
-        console.log('State changed')
+        }
     },
     getState() {
-        return this._state;
+        return this._state
     },
-    subscribe(observer) {
-        this._callBackSubscriber = observer
+    _callSubscriber(state: StateType) {
+        console.log('state changed!')
+    },
+    _addPost() {
+        let newPost = {id: 5, message: this._state.profilePage.newPostText, likesCount: 0}
+        this._state.profilePage.postData.push(newPost)
+        this._state.profilePage.newPostText = ''
+        this._callSubscriber(this._state)
+    },
+    _updateNewPostText(newText: string) {
+        this._state.profilePage.newPostText = newText
+        this._callSubscriber(this._state)
+    },
+    subscribe(observer: (state: StateType) => void) {
+        this._callSubscriber = observer;
     },
     dispatch(action) {
 
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.messagesPage = dialogsReducer(this._state.messagesPage, action)
-        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
 
-        this._callBackSubscriber(/*this._state*/)
+        this._callSubscriber(this._state)
     }
 }
 
-export type postsDataType = {
+export type PostDataType = {
     id: number
     message: string
     likesCount: number
 }
 
-export type dialogsDataType = {
+export type DialogsDataType = {
     id: number
     name: string
 }
@@ -151,26 +72,36 @@ export type messagesDataType = {
     message: string
 }
 
-export type profilePageType = {
-    postsData: Array<postsDataType>
-    newPostText: string
-    status: string
-    profile: string
+export type StateType = {
+    profilePage: ProfilePageType
+    messagesPage: MessagesPageType
 }
 
-export type messagesPageType = {
+export type ProfilePageType = {
+    postData: Array<PostDataType>
+    newPostText: string
+}
+
+export type MessagesPageType = {
+    dialogsData: Array<DialogsDataType>
     messagesData: Array<messagesDataType>
-    dialogsData: Array<dialogsDataType>
     newMessageBody: string
 }
 
-export type stateType = {
-    profilePage: profilePageType
-    messagesPage: messagesPageType
-    sidebar: any
+export type ActionsType = addPostACType | updateNewPostTextACType | updateNewMessageBodyACType | sendMessageACType
+
+export type StoreType = {
+    _state: StateType
+    getState: () => StateType
+    _callSubscriber: (state: StateType) => void
+    _addPost: () => void
+    _updateNewPostText: (newText: string) => void
+    subscribe: (observer: (state: StateType) => void) => void
+    dispatch: (action: ActionsType) => void
 }
 
-
-export default store;
-
-//window.store = store
+export type AppStateType = {
+    appState: StateType
+    dispatch: (action: ActionsType) => void
+    store: StoreType
+}

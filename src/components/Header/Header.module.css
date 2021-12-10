@@ -1,17 +1,10 @@
+.photo {
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+}
+
 .header {
     grid-area: h;
-    background-color: blanchedalmond;
-}
-
-.header img {
-    width: 150px;
-}
-
-.loginBlock {
-    float: right;
-}
-
-.loginBlock a {
-    color: darkslateblue;
-
+    background-color: #61adad;
 }
