@@ -1,6 +1,6 @@
 import React from "react";
-import {StateType} from "./store";
 import {addPostACType, updateNewPostTextACType} from "./profile-reducer";
+import {DialogsDataType, messagesDataType} from "./store";
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'SEND-MESSAGE'
@@ -22,7 +22,7 @@ export const sendMessageAC = () => {
     } as const
 }
 
-let InitialState = {
+let InitialState: InitialStateDialogsReducerType = {
     dialogsData: [
         {id: 1, name: 'Petr'},
         {id: 2, name: 'Dmitriy'},
@@ -38,16 +38,28 @@ let InitialState = {
     newMessageBody: ''
 }
 
+export type InitialStateDialogsReducerType = {
+    dialogsData: DialogsDataType[]
+    messagesData: messagesDataType[]
+    newMessageBody: string
+}
+
 export const dialogsReducer = (state = InitialState, action: ActionsType) => {
     switch (action.type) {
-        case "UPDATE-NEW-MESSAGE-BODY":
-            state.newMessageBody = action.body
-            return state
-        case "SEND-MESSAGE":
+        case "UPDATE-NEW-MESSAGE-BODY": {
+            return  {
+                ...state,
+                newMessageBody: action.body
+            }
+        }
+        case "SEND-MESSAGE": {
             let body = state.newMessageBody
-            state.newMessageBody = ''
-            state.messagesData.push({id: 6, message: body})
-            return state
+            return  {
+                ...state,
+                newMessageBody: '',
+                messagesData: [{id: 6, message: body},...state.messagesData]
+            }
+        }
         default:
             return state;
     }

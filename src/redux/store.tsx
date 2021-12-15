@@ -34,25 +34,15 @@ export let store: StoreType = {
     _callSubscriber(state: StateType) {
         console.log('state changed!')
     },
-    _addPost() {
-        let newPost = {id: 5, message: this._state.profilePage.newPostText, likesCount: 0}
-        this._state.profilePage.postData.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(this._state)
-    },
-    _updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
-    },
     subscribe(observer: (state: StateType) => void) {
         this._callSubscriber = observer;
     },
-    dispatch(action) {
+    dispatch(action: ActionsType) {
 
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.messagesPage = dialogsReducer(this._state.messagesPage, action)
 
-        this._callSubscriber(this._state)
+    /*    this._callSubscriber(this._state)*/
     }
 }
 
@@ -93,15 +83,8 @@ export type ActionsType = addPostACType | updateNewPostTextACType | updateNewMes
 export type StoreType = {
     _state: StateType
     getState: () => StateType
+
     _callSubscriber: (state: StateType) => void
-    _addPost: () => void
-    _updateNewPostText: (newText: string) => void
     subscribe: (observer: (state: StateType) => void) => void
     dispatch: (action: ActionsType) => void
-}
-
-export type AppStateType = {
-    appState: StateType
-    dispatch: (action: ActionsType) => void
-    store: StoreType
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import {StateType} from "./store";
+import {PostDataType} from "./store";
 import {sendMessageACType, updateNewMessageBodyACType} from "./dialogs-reducer";
 
 const ADD_POST = 'ADD-POST'
@@ -22,7 +22,7 @@ export const updateNewPostTextAC = (text: string) => {
     } as const
 }
 
-let InitialState = {
+let InitialState: InitialStateType = {
     postData: [
         {id: 1, message: 'I like ice cream!', likesCount: 3},
         {id: 1, message: 'Hello world!', likesCount: 5},
@@ -31,16 +31,27 @@ let InitialState = {
     newPostText: 'this is new social network'
 }
 
-export const profileReducer = (state= InitialState, action: ActionsType) => {
+export type InitialStateType = {
+    postData: PostDataType[]
+    newPostText: string
+}
+
+export const profileReducer = (state = InitialState, action: ActionsType) => {
     switch (action.type) {
-        case "ADD-POST":
+        case "ADD-POST": {
             let newPost = {id: 5, message: state.newPostText, likesCount: 0}
-            state.postData.push(newPost)
-            state.newPostText = ''
-            return state
-        case "UPDATE-NEW-POST-TEXT":
-            state.newPostText = action.newText
-            return state
+            return {
+                ...state,
+                postData: [newPost, ...state.postData],
+                newPostText: ''
+            }
+        }
+        case "UPDATE-NEW-POST-TEXT": {
+            return {
+                ...state,
+                newPostText: action.newText
+            }
+        }
         default:
             return state;
     }
