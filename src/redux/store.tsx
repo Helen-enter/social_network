@@ -10,7 +10,8 @@ export let store: StoreType = {
                 {id: 1, message: 'Hello world!', likesCount: 5},
                 {id: 1, message: 'juice and cake', likesCount: 10},
             ],
-            newPostText: 'this is new social network'
+            newPostText: 'this is new social network',
+            profile: null
         },
         messagesPage: {
             dialogsData: [
@@ -70,6 +71,7 @@ export type StateType = {
 export type ProfilePageType = {
     postData: Array<PostDataType>
     newPostText: string
+    profile: any
 }
 
 export type MessagesPageType = {

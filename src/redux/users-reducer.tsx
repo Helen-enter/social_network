@@ -8,16 +8,18 @@ export const UNFOLLOW = 'UNFOLLOW'
 export const SET_USERS = 'SET_USERS'
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 export const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+export const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 export type ActionsType = addPostACType | updateNewPostTextACType
-    | updateNewMessageBodyACType | sendMessageACType
+    | updateNewMessageBodyACType | sendMessageACType | toggleIsFetchingACType
     | unfollowACType | followACType | setUsersACType | setCurrentPageACType | setUsersTotalCountACType
 
 let InitialState: InitialStateType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false
 }
 
 export type InitialStateType = {
@@ -25,6 +27,7 @@ export type InitialStateType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 
 export const usersReducer = (state = InitialState, action: ActionsType) => {
@@ -58,6 +61,10 @@ export const usersReducer = (state = InitialState, action: ActionsType) => {
         case "SET_TOTAL_USERS_COUNT": {
             return {...state, totalUsersCount: action.count}
         }
+
+        case "TOGGLE_IS_FETCHING": {
+            return {...state, isFetching: action.isFetching}
+        }
         default:
             return state;
     }
@@ -85,6 +92,7 @@ export const setUsersAC = (users: UsersDataType[]) => {
 }
 
 export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
+export const toggleIsFetchingAC = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching} as const)
 export const setUsersTotalCountAC = (totalUsersCount: number) => ({
     type: SET_TOTAL_USERS_COUNT,
     count: totalUsersCount
@@ -96,3 +104,4 @@ export type followACType = ReturnType<typeof followAC>
 export type setUsersACType = ReturnType<typeof setUsersAC>
 export type setCurrentPageACType = ReturnType<typeof setCurrentPageAC>
 export type setUsersTotalCountACType = ReturnType<typeof setUsersTotalCountAC>
+export type toggleIsFetchingACType = ReturnType<typeof toggleIsFetchingAC>
