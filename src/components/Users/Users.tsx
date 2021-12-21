@@ -27,6 +27,7 @@ export type UsersComponentType = {
     currentPage: number
     setCurrentPage: (pageNumber: number) => void
     onPageChanged: (pageNumber: number) => void
+    followingInProgress: []
 }
 
 
@@ -55,11 +56,25 @@ export let Users = (props: UsersComponentType) => {
                     </div>
                     <div>
                         {u.followed
-                            ? <button onClick={() => {
+                            ? <button disabled={props.followingInProgress.some((id: number) => id === u.id)} onClick={() => {
                                 props.unfollow(u.id)
+                                /*props.toggleIsFollowingProgress(true, u.id)
+                                    usersAPI.unfollow(u.id).then(response => {
+                                        if (response.data.resultCode === 0) {
+                                            props.unfollow(u.id)
+                                        }
+                                        props.toggleIsFollowingProgress(false, u.id)
+                                    })*/
                             }}>unfollow</button>
-                            : <button onClick={() => {
+                            : <button disabled={props.followingInProgress.some((id: number) => id === u.id)} onClick={() => {
                                 props.follow(u.id)
+                                /*props.toggleIsFollowingProgress(true, u.id)
+                                    usersAPI.follow(u.id).then(response => {
+                                        if (response.data.resultCode === 0) {
+                                            props.follow(u.id)
+                                        }
+                                        props.toggleIsFollowingProgress(false, u.id)
+                                    })*/
                             }}> follow</button>}
                     </div>
                 </span>

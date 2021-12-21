@@ -2,6 +2,8 @@ import React from "react";
 import {PostDataType} from "./store";
 import {sendMessageACType, updateNewMessageBodyACType} from "./dialogs-reducer";
 import {UsersDataType} from "../components/Users/Users";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
@@ -37,6 +39,14 @@ export const setUserProfile = (profile: UsersDataType) => {
     } as const
 }
 
+export const getUserProfile = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        usersAPI.getProfile(userId).then(response => {
+            dispatch(setUserProfile(response.data))
+        })
+    }
+}
+
 let InitialState: InitialStateType = {
     postData: [
         {id: 1, message: 'I like ice cream!', likesCount: 3},
@@ -50,7 +60,7 @@ let InitialState: InitialStateType = {
 export type InitialStateType = {
     postData: PostDataType[]
     newPostText: string
-    profile: null
+    profile: null | UsersDataType
 }
 
 export const profileReducer = (state = InitialState, action: ActionsType) => {
