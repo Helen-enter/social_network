@@ -1,6 +1,6 @@
 import React from "react";
-import {addPostACType, profileReducer, updateNewPostTextACType} from "./profile-reducer";
-import {dialogsReducer, sendMessageACType, updateNewMessageBodyACType} from "./dialogs-reducer";
+import {addPostACType, profileReducer} from "./profile-reducer";
+import {dialogsReducer, sendMessageACType} from "./dialogs-reducer";
 
 export let store: StoreType = {
     _state: {
@@ -11,7 +11,8 @@ export let store: StoreType = {
                 {id: 1, message: 'juice and cake', likesCount: 10},
             ],
             newPostText: 'this is new social network',
-            profile: null
+            profile: null,
+            status: ''
         },
         messagesPage: {
             dialogsData: [
@@ -72,6 +73,7 @@ export type ProfilePageType = {
     postData: Array<PostDataType>
     newPostText: string
     profile: any
+    status: string
 }
 
 export type MessagesPageType = {
@@ -80,7 +82,7 @@ export type MessagesPageType = {
     newMessageBody: string
 }
 
-export type ActionsType = addPostACType | updateNewPostTextACType | updateNewMessageBodyACType | sendMessageACType
+export type ActionsType = addPostACType | sendMessageACType
 
 export type StoreType = {
     _state: StateType

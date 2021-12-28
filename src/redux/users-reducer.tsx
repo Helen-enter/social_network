@@ -1,6 +1,6 @@
 import React from "react";
-import {sendMessageACType, updateNewMessageBodyACType} from "./dialogs-reducer";
-import {addPostACType, updateNewPostTextACType} from "./profile-reducer";
+import {sendMessageACType} from "./dialogs-reducer";
+import {addPostACType} from "./profile-reducer";
 import {UsersDataType} from "../components/Users/Users";
 import {usersAPI} from "../api/api";
 import {Dispatch} from "redux";
@@ -15,8 +15,6 @@ export const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 export type ActionsType =
     addPostACType
-    | updateNewPostTextACType
-    | updateNewMessageBodyACType
     | sendMessageACType
     | toggleIsFetchingACType
     | unfollowACType

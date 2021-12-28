@@ -3,6 +3,7 @@ import s from "../Profile.module.css";
 import image from "../../../assets/tmb.jpg";
 import {ProfileType} from "../Profile";
 import {Preloader} from "../../../common/Preloader/Preloader";
+import { ProfileStatus } from "./ProfileStatus";
 
 export const ProfileInfo = (props: ProfileType) => {
     const divContent = {
@@ -18,6 +19,7 @@ export const ProfileInfo = (props: ProfileType) => {
             </div>
             <div>
                 <img src={props.profile.photos.large}/>
+                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
                 ava + description
             </div>
         </div>

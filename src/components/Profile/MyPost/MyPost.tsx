@@ -1,42 +1,48 @@
-import React, {RefObject} from "react";
+import React from "react";
 import {Post} from "./Post/Post";
 import s from './MyPost.module.css'
 import {PostDataType} from "../../../redux/store";
+import {reduxForm, Field} from "redux-form";
+import {maxLengthCreator, requiredField} from "../../../utils/validators";
+import { Textarea } from "../../../common/FormsControls/FormsControls";
 
 type MyPostType = {
-    updateNewPostText: (text: string) => void
     postData: PostDataType[]
-    addPost: () => void
+    addPost: (newPostText: string) => void
     newPostText: string
 }
 
 export const MyPost = (props: MyPostType) => {
 
     let postElements = props.postData.map((p) => <Post id={p.id} message={p.message}
-                                                    likesCount={p.likesCount}/>)
-    let newPostElement: RefObject<HTMLTextAreaElement> = React.createRef()
+                                                       likesCount={p.likesCount}/>)
 
-    let onAddPost = () => {
-        props.addPost()
-    }
-
-    let onPostChange = () => {
-        if (newPostElement.current?.value) {
-            let text = newPostElement.current.value
-            props.updateNewPostText(text)
-        }
+    let onAddPost = (values: any) => {
+        props.addPost(values.newPostText)
     }
 
     return (
         <div className={s.postsBlock}>
             <h3>My post</h3>
-            <div>
-                <div><textarea ref={newPostElement} onChange={onPostChange} value={props.newPostText}></textarea></div>
-                <div>
-                    <button onClick={onAddPost}>add post</button>
-                </div>
-            </div>
+            <AddNewPostFormRedux onSubmit={onAddPost}/>
             {postElements}
         </div>
     )
 }
+
+const maxLength10 = maxLengthCreator(10)
+
+export const AddNewPostForm = (props: any) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field name='newPostText' component={Textarea} validate={[requiredField, maxLength10]}/>
+            </div>
+            <div>
+                <button>add post</button>
+            </div>
+        </form>
+    )
+}
+
+let AddNewPostFormRedux = reduxForm({form: 'ProfileAddNewPostForm'})(AddNewPostForm)

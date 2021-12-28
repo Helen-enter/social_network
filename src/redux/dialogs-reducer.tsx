@@ -1,24 +1,23 @@
 import React from "react";
-import {addPostACType, updateNewPostTextACType} from "./profile-reducer";
-import {DialogsDataType, messagesDataType} from "./store";
+import {ActionsType, DialogsDataType, messagesDataType} from "./store";
 
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
+/*const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'*/
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
-export type updateNewMessageBodyACType = ReturnType<typeof updateNewMessageBodyAC>
+/*export type updateNewMessageBodyACType = ReturnType<typeof updateNewMessageBodyAC>*/
 export type sendMessageACType = ReturnType<typeof sendMessageAC>
 
-export type ActionsType = addPostACType | updateNewPostTextACType | updateNewMessageBodyACType | sendMessageACType
 
-export const updateNewMessageBodyAC = (body: string) => {
+/*export const updateNewMessageBodyAC = (body: string) => {
     return {
         type: UPDATE_NEW_MESSAGE_BODY,
         body
     } as const
-}
-export const sendMessageAC = () => {
+}*/
+export const sendMessageAC = (newMessageBody: string) => {
     return {
-        type: SEND_MESSAGE
+        type: SEND_MESSAGE,
+        newMessageBody
     } as const
 }
 
@@ -46,17 +45,16 @@ export type InitialStateDialogsReducerType = {
 
 export const dialogsReducer = (state = InitialState, action: ActionsType) => {
     switch (action.type) {
-        case "UPDATE-NEW-MESSAGE-BODY": {
+       /* case "UPDATE-NEW-MESSAGE-BODY": {
             return  {
                 ...state,
                 newMessageBody: action.body
             }
-        }
+        }*/
         case "SEND-MESSAGE": {
-            let body = state.newMessageBody
+            let body = action.newMessageBody
             return  {
                 ...state,
-                newMessageBody: '',
                 messagesData: [{id: 6, message: body},...state.messagesData]
             }
         }
