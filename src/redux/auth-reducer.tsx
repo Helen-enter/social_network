@@ -5,7 +5,7 @@ import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 
-export const SET_USER_DATA = 'SET_USER_DATA'
+export const SET_USER_DATA = 'network/auth/SET_USER_DATA'
 
 export type ActionsType = addPostACType | sendMessageACType | setAuthUserDataACType
 
@@ -57,12 +57,11 @@ export const getAuthUserData: any = () => (dispatch: Dispatch) => {
     })
 }
 
-export const logout = () => (dispatch: Dispatch) => {
-    authAPI.logout().then(response => {
+export const logout = () => async (dispatch: Dispatch) => {
+    let response = await authAPI.logout()
         if (response.data.resultCode === 0) {
             dispatch(setAuthUserData(null, null, null, false))
         }
-    })
 }
 
 export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch) => {

@@ -4,7 +4,7 @@ import s from './MyPost.module.css'
 import {PostDataType} from "../../../redux/store";
 import {reduxForm, Field} from "redux-form";
 import {maxLengthCreator, requiredField} from "../../../utils/validators";
-import { Textarea } from "../../../common/FormsControls/FormsControls";
+import {Textarea} from "../../../common/FormsControls/FormsControls";
 
 type MyPostType = {
     postData: PostDataType[]
@@ -12,22 +12,27 @@ type MyPostType = {
     newPostText: string
 }
 
-export const MyPost = (props: MyPostType) => {
+export class MyPost extends React.PureComponent<MyPostType> {
 
-    let postElements = props.postData.map((p) => <Post id={p.id} message={p.message}
-                                                       likesCount={p.likesCount}/>)
-
-    let onAddPost = (values: any) => {
-        props.addPost(values.newPostText)
+    shouldComponentUpdate(nextProps: Readonly<MyPostType>, nextState: Readonly<{}>, nextContext: any): boolean {
+        return nextProps != this.props || nextState != this.state
     }
 
-    return (
-        <div className={s.postsBlock}>
-            <h3>My post</h3>
-            <AddNewPostFormRedux onSubmit={onAddPost}/>
-            {postElements}
-        </div>
-    )
+    render() {
+        let postElements = this.props.postData.map((p) => <Post id={p.id} message={p.message}
+                                                                likesCount={p.likesCount}/>)
+
+        let onAddPost = (values: any) => {
+            this.props.addPost(values.newPostText)
+        }
+        return (
+            <div className={s.postsBlock}>
+                <h3>My post</h3>
+                <AddNewPostFormRedux onSubmit={onAddPost}/>
+                {postElements}
+            </div>
+        )
+    }
 }
 
 const maxLength10 = maxLengthCreator(10)

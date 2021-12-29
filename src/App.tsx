@@ -24,7 +24,7 @@ class App extends Component<any> {
     }
 
     render() {
-        /*if (!this.props.initialized) {
+     /*   if (!this.props.initialized) {
             return <Preloader/>
         }*/
         return (
@@ -39,38 +39,6 @@ class App extends Component<any> {
         )
     }
 }
-
-/*class App extends Component<any> {
-    componentDidMount() {
-        this.props.initializeApp();
-    }
-
-    render() {
-        if (!this.props.initialized) {
-            return <Preloader/>
-        }
-
-        return (
-            <div className='app-wrapper'>
-                <HeaderContainer/>
-                <Navbar/>
-                <div className='app-wrapper-content'>
-                    <Route path='/dialogs'
-                           render={() => <DialogsContainer/>}/>
-
-                    <Route path='/profile/:userId?'
-                           render={() => <ProfileContainer/>}/>
-
-                    <Route path='/users'
-                           render={() => <UsersContainer/>}/>
-
-                    <Route path='/login'
-                           render={() => <Login/>}/>
-                </div>
-            </div>
-        )
-    }
-}*/
 
 const mapStateToProps = (state: AppStateType) => ({
     initialised: state.app.initialised

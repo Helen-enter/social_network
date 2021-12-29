@@ -8,16 +8,19 @@ import {profileAPI, usersAPI} from "../api/api";
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
+const DELETE_POST = 'DELETE_POST'
 
 export type addPostACType = ReturnType<typeof addPostAC>
 export type setUserProfileType = ReturnType<typeof setUserProfile>
 export type setStatusACType = ReturnType<typeof setStatus>
+export type deletePostType = ReturnType<typeof deletePost>
 
 export type ActionsType =
     addPostACType
     | sendMessageACType
     | setUserProfileType
     | setStatusACType
+    | deletePostType
 
 export const addPostAC = (newPostText: string) => {
     return {
@@ -40,6 +43,13 @@ export const setUserProfile = (profile: UsersDataType) => {
     } as const
 }
 
+export const deletePost = (id: number) => {
+    return {
+        type: DELETE_POST,
+        id
+    } as const
+}
+
 export const getUserProfile = (userId: number) => {
     return (dispatch: Dispatch) => {
         usersAPI.getProfile(userId).then(response => {
@@ -59,7 +69,7 @@ export const getStatus = (userId: number) => {
 export const updateStatus = (status: string) => {
     return (dispatch: Dispatch) => {
         profileAPI.updateStatus(status).then(response => {
-            if(response.data.resultCode === 0) {
+            if (response.data.resultCode === 0) {
                 dispatch(setStatus(status))
             }
         })
@@ -69,8 +79,8 @@ export const updateStatus = (status: string) => {
 let InitialState: InitialStateType = {
     postData: [
         {id: 1, message: 'I like ice cream!', likesCount: 3},
-        {id: 1, message: 'Hello world!', likesCount: 5},
-        {id: 1, message: 'juice and cake', likesCount: 10},
+        {id: 2, message: 'Hello world!', likesCount: 5},
+        {id: 3, message: 'juice and cake', likesCount: 10},
     ],
     newPostText: 'this is new social network',
     profile: null,
@@ -87,7 +97,7 @@ export type InitialStateType = {
 export const profileReducer = (state = InitialState, action: ActionsType) => {
     switch (action.type) {
         case "ADD-POST": {
-            let newPost = {id: 5, message: action.newPostText, likesCount: 0}
+            let newPost = {id: 4, message: action.newPostText, likesCount: 0}
             return {
                 ...state,
                 postData: [newPost, ...state.postData],
@@ -104,6 +114,11 @@ export const profileReducer = (state = InitialState, action: ActionsType) => {
             return {
                 ...state,
                 status: action.status
+            }
+        }
+        case "DELETE_POST": {
+            return {
+                ...state, postData: state.postData.filter(p => p.id != action.id)
             }
         }
         default:

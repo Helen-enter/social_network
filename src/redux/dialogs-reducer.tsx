@@ -1,19 +1,10 @@
 import React from "react";
 import {ActionsType, DialogsDataType, messagesDataType} from "./store";
 
-/*const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'*/
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
-/*export type updateNewMessageBodyACType = ReturnType<typeof updateNewMessageBodyAC>*/
 export type sendMessageACType = ReturnType<typeof sendMessageAC>
 
-
-/*export const updateNewMessageBodyAC = (body: string) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_BODY,
-        body
-    } as const
-}*/
 export const sendMessageAC = (newMessageBody: string) => {
     return {
         type: SEND_MESSAGE,
@@ -45,12 +36,6 @@ export type InitialStateDialogsReducerType = {
 
 export const dialogsReducer = (state = InitialState, action: ActionsType) => {
     switch (action.type) {
-       /* case "UPDATE-NEW-MESSAGE-BODY": {
-            return  {
-                ...state,
-                newMessageBody: action.body
-            }
-        }*/
         case "SEND-MESSAGE": {
             let body = action.newMessageBody
             return  {
