@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/react-way-of-samurai/static/css/main.b1a10b2c.chunk.css",
+    "main.js": "/react-way-of-samurai/static/js/main.f351ad6f.chunk.js",
+    "main.js.map": "/react-way-of-samurai/static/js/main.f351ad6f.chunk.js.map",
+    "runtime-main.js": "/react-way-of-samurai/static/js/runtime-main.bc524338.js",
+    "runtime-main.js.map": "/react-way-of-samurai/static/js/runtime-main.bc524338.js.map",
+    "static/js/2.ee44302d.chunk.js": "/react-way-of-samurai/static/js/2.ee44302d.chunk.js",
+    "static/js/2.ee44302d.chunk.js.map": "/react-way-of-samurai/static/js/2.ee44302d.chunk.js.map",
+    "static/css/3.d8ab7040.chunk.css": "/react-way-of-samurai/static/css/3.d8ab7040.chunk.css",
+    "static/js/3.9a4bc20c.chunk.js": "/react-way-of-samurai/static/js/3.9a4bc20c.chunk.js",
+    "static/js/3.9a4bc20c.chunk.js.map": "/react-way-of-samurai/static/js/3.9a4bc20c.chunk.js.map",
+    "static/css/4.183466c3.chunk.css": "/react-way-of-samurai/static/css/4.183466c3.chunk.css",
+    "static/js/4.5723aca8.chunk.js": "/react-way-of-samurai/static/js/4.5723aca8.chunk.js",
+    "static/js/4.5723aca8.chunk.js.map": "/react-way-of-samurai/static/js/4.5723aca8.chunk.js.map",
+    "index.html": "/react-way-of-samurai/index.html",
+    "precache-manifest.cf1fbc77f36809ccdbf63a5cb81303e9.js": "/react-way-of-samurai/precache-manifest.cf1fbc77f36809ccdbf63a5cb81303e9.js",
+    "service-worker.js": "/react-way-of-samurai/service-worker.js",
+    "static/css/3.d8ab7040.chunk.css.map": "/react-way-of-samurai/static/css/3.d8ab7040.chunk.css.map",
+    "static/css/4.183466c3.chunk.css.map": "/react-way-of-samurai/static/css/4.183466c3.chunk.css.map",
+    "static/css/main.b1a10b2c.chunk.css.map": "/react-way-of-samurai/static/css/main.b1a10b2c.chunk.css.map",
+    "static/js/2.ee44302d.chunk.js.LICENSE.txt": "/react-way-of-samurai/static/js/2.ee44302d.chunk.js.LICENSE.txt",
+    "static/media/base_87716f252d.jpg": "/react-way-of-samurai/static/media/base_87716f252d.d0d45a0e.jpg",
+    "static/media/cat.jpg": "/react-way-of-samurai/static/media/cat.b2623a71.jpg",
+    "static/media/chat_icon.jpg": "/react-way-of-samurai/static/media/chat_icon.0c8683b8.jpg",
+    "static/media/tmb.jpg": "/react-way-of-samurai/static/media/tmb.842eb8ed.jpg",
+    "static/media/valentines-icegif-5.gif": "/react-way-of-samurai/static/media/valentines-icegif-5.43f6eff4.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bc524338.js",
+    "static/js/2.ee44302d.chunk.js",
+    "static/css/main.b1a10b2c.chunk.css",
+    "static/js/main.f351ad6f.chunk.js"
+  ]
+}
