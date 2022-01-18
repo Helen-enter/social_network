@@ -4,14 +4,16 @@ import photoCat from "../../assets/base_87716f252d.jpg";
 import {NavLink} from "react-router-dom";
 import {Paginator} from "./Paginator";
 
+type PhotosType = {
+    small: string | undefined
+    large: string | undefined
+}
+
 export type UsersDataType = {
     name: string
     id: number
     uniqueUrlName: null | string
-    photos: {
-        small: string | undefined
-        large: string | undefined
-    },
+    photos: PhotosType
     status: null | string
     followed: boolean
 }
@@ -23,12 +25,13 @@ export type UsersComponentType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     pageSize: number
-    totalUsersCount: any
-    setTotalUsersCount: (totalCount: number) => void
+    totalUsersCount: number
     currentPage: number
     setCurrentPage: (pageNumber: number) => void
     onPageChanged: (pageNumber: number) => void
-    followingInProgress: []
+    followingInProgress: Array<number>
+    portionSize: 10
+    totalItemsCount: number
 }
 
 
@@ -36,7 +39,8 @@ export let Users = (props: UsersComponentType) => {
     return (
         <div>
             <Paginator pageSize={props.pageSize} totalUsersCount={props.totalUsersCount} currentPage={props.currentPage}
-                       onPageChanged={props.onPageChanged}/>
+                       onPageChanged={props.onPageChanged} portionSize={props.portionSize}
+                       totalItemsCount={props.totalUsersCount}/>
             {props.users.map((u: UsersDataType) => <div key={u.id}>
                 <span>
                     <div className={styles.photo}>
@@ -58,10 +62,6 @@ export let Users = (props: UsersComponentType) => {
                     <span>
                         <div>{u.name}</div>
                         <div>{u.status}</div>
-                    </span>
-                    <span>
-                        <div>{/*{u.location.country}*/}</div>
-                        <div>{/*{u.location.city}*/}</div>
                     </span>
                 </span>
             </div>)}

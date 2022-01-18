@@ -25,22 +25,22 @@ let InitialState: InitialStateDialogsReducerType = {
         {id: 2, message: 'Hello)))'},
         {id: 3, message: 'How are you?'},
     ],
-    newMessageBody: ''
 }
 
 export type InitialStateDialogsReducerType = {
     dialogsData: DialogsDataType[]
     messagesData: messagesDataType[]
-    newMessageBody: string
+    newMessageBody?: string
 }
 
 export const dialogsReducer = (state = InitialState, action: ActionsType) => {
     switch (action.type) {
-        case "SEND-MESSAGE": {
+        case SEND_MESSAGE: {
             let body = action.newMessageBody
             return  {
                 ...state,
-                messagesData: [{id: 6, message: body},...state.messagesData]
+                //messagesData: [{id: 6, message: body},...state.messagesData]
+                messagesData: [...state.messagesData, {id: 4, message: body}]
             }
         }
         default:

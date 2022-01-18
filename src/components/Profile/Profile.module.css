@@ -9,3 +9,12 @@
     width: 1000px;
     height: 550px;
 }
+
+.avatar {
+    max-width: 350px;
+    margin-top: 10px;
+}
+
+.contact{
+    padding-left: 10px;
+}

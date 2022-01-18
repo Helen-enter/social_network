@@ -1,12 +1,9 @@
 import React from "react";
-import {sendMessageACType} from "./dialogs-reducer";
-import {addPostACType} from "./profile-reducer";
-import {Dispatch} from "redux";
-import {setAuthUserDataACType, getAuthUserData} from "./auth-reducer";
+import {ActionsType, getAuthUserData} from "./auth-reducer";
+import {BaseThunkType} from "./redux-store";
+import {FormAction} from "redux-form";
 
 export const INITIALISED_SUCCESS = 'INITIALISED_SUCCESS'
-
-export type ActionsType = addPostACType | sendMessageACType | setAuthUserDataACType | initialisedSuccessACType
 
 export let InitialState: InitialStateType = {
     initialised: false
@@ -15,6 +12,8 @@ export let InitialState: InitialStateType = {
 export type InitialStateType = {
     initialised: boolean
 }
+
+type ThunkType = BaseThunkType<ActionsType | FormAction>
 
 export const appReducer = (state = InitialState, action: initialisedSuccessACType) => {
     switch (action.type) {
@@ -35,14 +34,10 @@ export const initializedSuccess = () => {
     } as const
 }
 
-export const initializeApp = () => (dispatch: Dispatch) => {
+export const initializeApp = (): ThunkType => async (dispatch) => {
     let promise = dispatch(getAuthUserData());
-    debugger
-    Promise.all([promise])
-        .then(() => {
-            dispatch(initializedSuccess());
-        });
-
+    await Promise.all([promise])
+    dispatch(initializedSuccess());
 }
 
 export type initialisedSuccessACType = ReturnType<typeof initializedSuccess>

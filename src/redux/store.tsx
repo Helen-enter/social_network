@@ -43,8 +43,6 @@ export let store: StoreType = {
 
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.messagesPage = dialogsReducer(this._state.messagesPage, action)
-
-    /*    this._callSubscriber(this._state)*/
     }
 }
 
@@ -79,7 +77,7 @@ export type ProfilePageType = {
 export type MessagesPageType = {
     dialogsData: Array<DialogsDataType>
     messagesData: Array<messagesDataType>
-    newMessageBody: string
+    newMessageBody?: string
 }
 
 export type ActionsType = addPostACType | sendMessageACType

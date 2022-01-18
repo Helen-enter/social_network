@@ -4,6 +4,8 @@ import {addPostACType} from "./profile-reducer";
 import {UsersDataType} from "../components/Users/Users";
 import {usersAPI} from "../api/api";
 import {Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 export const FOLLOW = 'FOLLOW'
 export const UNFOLLOW = 'UNFOLLOW'
@@ -25,12 +27,12 @@ export type ActionsType =
     | toggleIsFollowingProgressACType
 
 let InitialState: InitialStateType = {
-    users: [],
-    pageSize: 5,
+    users: [] as Array<UsersDataType>,
+    pageSize: 10,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-    followingInProgress: []
+    followingInProgress: [] as Array<number>
 }
 
 export type InitialStateType = {
@@ -39,7 +41,7 @@ export type InitialStateType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
-    followingInProgress: any
+    followingInProgress: Array<number>
 }
 
 export const usersReducer = (state = InitialState, action: ActionsType) => {
@@ -119,13 +121,13 @@ export const toggleIsFollowingProgress = (isFetching: boolean, userId: number) =
     isFetching,
     userId
 } as const)
+
 export const setTotalUsersCount = (totalUsersCount: number) => ({
     type: SET_TOTAL_USERS_COUNT,
     count: totalUsersCount
 } as const)
 
-
-export const requestUsers = (currentPage: number, pageSize: number) => {
+export const requestUsers= (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, ActionsType> => {
     return (dispatch: Dispatch) => {
         dispatch(toggleIsFetching(true))
         dispatch(setCurrentPageAC(currentPage))
@@ -137,7 +139,7 @@ export const requestUsers = (currentPage: number, pageSize: number) => {
     }
 }
 
-const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: Function, actionCreator: Function) => {
+const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: Function, actionCreator: (userId: number) => ActionsType) => {
     dispatch(toggleIsFollowingProgress(true, userId))
     let response = await apiMethod(userId)
     if (response.data.resultCode === 0) {

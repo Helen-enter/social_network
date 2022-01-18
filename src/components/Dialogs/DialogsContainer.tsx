@@ -4,7 +4,7 @@ import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {compose, Dispatch} from "redux";
 import {AppStateType} from "../../redux/redux-store";
-import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 let mapStateToProps = (state: AppStateType) => {
     return {
@@ -14,12 +14,13 @@ let mapStateToProps = (state: AppStateType) => {
 
 let mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        sendMessage: (newMessageBody: string) => dispatch(sendMessageAC(newMessageBody))
+        sendMessage: (newMessageBody: string) =>
+            dispatch(sendMessageAC(newMessageBody))
     }
 }
 
-export default compose<any>(
+export default compose<React.ComponentType>(
     connect(mapStateToProps, mapDispatchToProps),
-    WithAuthRedirect
+    withAuthRedirect
 )(Dialogs)
 

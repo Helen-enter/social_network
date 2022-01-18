@@ -3,8 +3,13 @@ import s from "./Header.module.css";
 import Logo from "../../assets/chat_icon.jpg";
 import {NavLink} from "react-router-dom";
 
+export type HeaderPropsType = {
+    isAuth: boolean
+    login: string | null
+    logout: () => Promise<void>
+}
 
-export const Header = (props: any) => {
+export const Header = (props: HeaderPropsType) => {
     return (
         <header className={s.header}>
             <img className={s.photo} src={Logo}/>

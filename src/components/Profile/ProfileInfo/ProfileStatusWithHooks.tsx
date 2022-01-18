@@ -5,7 +5,7 @@ export type ProfileStatusType = {
     updateStatus: (status: string) => void
 }
 
-export const ProfileStatusWithHooks = (props: any) => {
+export const ProfileStatusWithHooks = (props: ProfileStatusType) => {
 
     let [editMode, setEditMode] = useState(false)
     let [status, setStatus] = useState(props.status)
